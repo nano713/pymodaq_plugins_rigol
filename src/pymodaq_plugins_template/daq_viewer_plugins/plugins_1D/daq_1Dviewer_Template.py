@@ -3,6 +3,7 @@ from pymodaq.utils.daq_utils import ThreadCommand
 from pymodaq.utils.data import DataFromPlugins, Axis, DataToExport
 from pymodaq.control_modules.viewer_utility_classes import DAQ_Viewer_base, comon_parameters, main
 from pymodaq.utils.parameter import Parameter
+from pymodaq.pymodaq_plugins_rigol.hardware.Dsa815_VISADRIVER import Dsa815
 
 
 class PythonWrapperOfYourInstrument:
@@ -38,9 +39,12 @@ class DAQ_1DViewer_Template(DAQ_Viewer_base):
 
     """
     params = comon_parameters+[
-        ## TODO for your custom plugin
-        # elements to be added here as dicts in order to control your custom stage
-        ############
+        {'title': 'Start Freq', 'name': 'start_freq', 'type': 'float', 'value': 100e3, 'default': 100e3, 'suffix': 'Hz'},
+        {'title': 'Center Freq', 'name': 'center_freq', 'type': 'float', 'value': 1e6, 'default': 1e6, 'suffix': 'Hz'},
+        {'title': 'Stop Freq', 'name': 'stop_freq', 'type': 'float', 'value': 10e6, 'default': 10e6, 'suffix': 'Hz'},
+        {'title': 'Freq Points', 'name': 'freq_points', 'type': 'int', 'value': 1001, 'default': 1001},
+        {'title': 'Sweep Time', 'name': 'sweep_time', 'type': 'float', 'value': 1, 'default': 1, 'suffix': 's'},
+        {'title': 'Continuous Time', 'name': 'continuous time', 'type': 'bool', 'value': False},
         ]
 
     def ini_attributes(self):
