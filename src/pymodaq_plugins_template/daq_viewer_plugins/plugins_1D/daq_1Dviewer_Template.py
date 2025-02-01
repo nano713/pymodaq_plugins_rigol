@@ -3,7 +3,7 @@ from pymodaq.utils.daq_utils import ThreadCommand
 from pymodaq.utils.data import DataFromPlugins, Axis, DataToExport
 from pymodaq.control_modules.viewer_utility_classes import DAQ_Viewer_base, comon_parameters, main
 from pymodaq.utils.parameter import Parameter
-from pymodaq.pymodaq_plugins_rigol.hardware.Dsa815_VISADRIVER import Dsa815
+from pymodaq.pymodaq_plugins_rigol.hardware.Dsa815_VISADRIVER import DSA815
 
 
 class PythonWrapperOfYourInstrument:
@@ -50,7 +50,7 @@ class DAQ_1DViewer_Template(DAQ_Viewer_base):
     def ini_attributes(self):
         #  TODO declare the type of the wrapper (and assign it to self.controller) you're going to use for easy
         #  autocompletion
-        self.controller: PythonWrapperOfYourInstrument = None
+        self.controller: DSA815 = None
 
         # TODO declare here attributes you want/need to init with a default value
 
@@ -65,9 +65,20 @@ class DAQ_1DViewer_Template(DAQ_Viewer_base):
             A given parameter (within detector_settings) whose value has been changed by the user
         """
         ## TODO for your custom plugin
-        if param.name() == "a_parameter_you've_added_in_self.params":
-           self.controller.your_method_to_apply_this_param_change()
-#        elif ...
+        if param.name() == "start_freq":
+           self.controller.set_start_freq(self.settings['start_freq'].value())
+
+        elif param.name() == 'center_freq':
+            self.controller.set_center_freq(self.settings['center_freq'].value())
+
+        elif param.name() == 'stop_freq':
+            self.controller.set_stop_freq(self.settings['stop_freq'].value())
+
+        elif param.name() == 'freq_points':
+            self.controller.set_freq_points(self.settings['freq_points'].value())
+
+        elif param.name() == 'sweep_time':
+            self.controller.set_sweep_time(self.settings['sweep_time'].value())
         ##
 
     def ini_detector(self, controller=None):
