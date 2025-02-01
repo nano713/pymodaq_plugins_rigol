@@ -28,3 +28,13 @@ class DSA815:
     def get_center_freq(self): 
         """Get the center frequency of the spectrum analyzer"""
         return self._spectrum.query(":SENSe:FREQuency:CENTer?")
+    
+    def set_stop_freq(self, stop_freq): 
+        """Set the stop frequency of the spectrum analyzer"""
+        if stop_freq > 0 and stop_freq < 7.5e9:
+            self._spectrum.write(f":SENSe:FREQuency:STOP {stop_freq} HZ")
+            logger.info(f"Set stop frequency to {stop_freq} Hz")
+    
+    def get_stop_freq(self): 
+        """Get the stop frequency of the spectrum analyzer"""
+        return self._spectrum.query(":SENSe:FREQuency:STOP?")
