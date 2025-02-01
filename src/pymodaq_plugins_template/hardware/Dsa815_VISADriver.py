@@ -10,5 +10,10 @@ class DSA815:
 
     
     def set_start_freq(self, start_freq): 
+        """Set the start frequency of the spectrum analyzer"""
         self._spectrum.write(":SENS:FREQ:STAR %e HZ")
         logger.info(f"Set start frequency to {start_freq} Hz")
+    
+    def get_start_freq(self): 
+        """Get the start frequency of the spectrum analyzer"""
+        return self._spectrum.query(":SENSe:FREQuency:STARt?")
