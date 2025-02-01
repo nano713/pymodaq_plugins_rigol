@@ -38,3 +38,36 @@ class DSA815:
     def get_stop_freq(self): 
         """Get the stop frequency of the spectrum analyzer"""
         return self._spectrum.query(":SENSe:FREQuency:STOP?")
+    
+    def set_freq_points(self, freq_points): 
+        """Set the number of frequency points of the spectrum analyzer"""
+        if freq_points > 100 and freq_points < 3002:
+            self._spectrum.write(f":SENSe:SWEep:POINts {freq_points}")
+            logger.info(f"Set frequency points to {freq_points}")
+    
+    def get_freq_points(self): 
+        """Get the number of frequency points of the spectrum analyzer"""
+        return self._spectrum.query(":SENSe:SWEep:POINts?")
+    
+    def set_sweep_time(self, sweep_time): 
+        """Set the sweep time of the spectrum analyzer"""
+        if sweep_time > 2e-5 and sweep_time < 7500:
+            self._spectrum.write(f":SENSe:SWEep:TIME {sweep_time}")
+            logger.info(f"Set sweep time to {sweep_time}")
+    
+    def get_sweep_time(self): 
+        """Get the sweep time of the spectrum analyzer"""
+        return self._spectrum.query(":SENSe:SWEep:TIME?")   
+    
+    def set_continuous_sweep(self, continuous_sweep): 
+        """Set the continuous sweep of the spectrum analyzer"""
+        if continuous_sweep == True:
+            self._spectrum.write(":INITiate:CONTinuous ON")
+            logger.info("Set continuous sweep to ON")
+        else:
+            self._spectrum.write(":INITiate:CONTinuous OFF")
+            logger.info("Set continuous sweep to OFF")
+    
+    def get_continuous_sweep(self): 
+        """Get the continuous sweep of the spectrum analyzer"""
+        return self._spectrum.query(":INITiate:CONTinuous?")
