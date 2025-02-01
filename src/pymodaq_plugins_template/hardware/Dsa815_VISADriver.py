@@ -7,7 +7,12 @@ class DSA815:
     def __init__(self):
         rm = pyvisa.ResourceManager()
         self._spectrum = rm.open_resource() # Open the first available resource and fix this
- 
+        
+    def connect(self, address): 
+        """Connect to the spectrum analyzer"""
+        self._spectrum.open_resource(address)
+        logger.info(f"Connected to {address}")
+    
     def set_start_freq(self, start_freq): 
         """Set the start frequency of the spectrum analyzer"""
         if start_freq > 0 and start_freq < 7.5e9:
